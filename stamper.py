@@ -25,3 +25,12 @@ stamper.stamp()
 
 # to end all turtle programs
 turtle.done()
+
+
+"""
+Uses of Turtle Graphics Stamp
+1. Board Games
+2. 2D Games such as Snake / Tron clones
+3. Exploring mazes
+4. Pixel Art
+"""
