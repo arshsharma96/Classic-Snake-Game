@@ -4,7 +4,7 @@ import turtle
 # define program constants
 WIDTH = 500
 HEIGHT = 500
-DELAY = 400  # in Milliseconds
+DELAY = 400  # in Milliseconds this controls the speed of the snake
 
 # global variables
 
@@ -65,8 +65,8 @@ def move_snake():
     snake.pop(0)
 
     # Draw snake for the first time
-    for segment in snake:
-        stamper.goto(segment[0], segment[1])
+    for segmentIntMvSnake in snake:
+        stamper.goto(segmentIntMvSnake[0], segmentIntMvSnake[1])
         stamper.stamp()
 
     # Refresh screen
