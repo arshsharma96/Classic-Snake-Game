@@ -58,22 +58,28 @@ def move_snake():
     new_head[0] += offsets[snake_direction][0]
     new_head[1] += offsets[snake_direction][1]
 
-    # add new head to snake body
-    snake.append(new_head)
+    # Check collisions
+    # this enables if snake touches the wall or itself the game ends
+    if new_head in snake or new_head[0] < - WIDTH / 2 or new_head[0] > WIDTH / 2 or new_head[1] < - HEIGHT / 2 or \
+            new_head[1] > HEIGHT / 2:
+        turtle.bye()  # closing the program
+    else:
+        # add new head to snake body
+        snake.append(new_head)
 
-    # remove the tail of the snake body
-    snake.pop(0)
+        # remove the tail of the snake body
+        snake.pop(0)
 
-    # Draw snake for the first time
-    for segmentIntMvSnake in snake:
-        stamper.goto(segmentIntMvSnake[0], segmentIntMvSnake[1])
-        stamper.stamp()
+        # Draw snake for the first time
+        for segmentIntMvSnake in snake:
+            stamper.goto(segmentIntMvSnake[0], segmentIntMvSnake[1])
+            stamper.stamp()
 
-    # Refresh screen
-    screen.update()
+        # Refresh screen
+        screen.update()
 
-    # Rinse and repeat
-    turtle.ontimer(move_snake, DELAY)
+        # Rinse and repeat
+        turtle.ontimer(move_snake, DELAY)
 
 
 # creating the window for drawing
