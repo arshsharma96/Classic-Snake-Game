@@ -18,6 +18,7 @@ offsets = {
 }
 
 snake_direction = "up"
+score = 0
 
 
 # moves the snake upwards
@@ -67,8 +68,9 @@ def get_distance(pos1, pos2):
 
 # detect food collisions
 def food_collision():
-    global food_pos
+    global food_pos, score
     if get_distance(snake[-1], food_pos) < 20:
+        score += 1
         food_pos = get_random_food_pos()
         food.goto(food_pos)
         return True
@@ -111,6 +113,7 @@ def move_snake():
             stamper.stamp()
 
         # Refresh screen
+        screen.title(f"Snake Game. Score : {score}")
         screen.update()
 
         # Rinse and repeat
