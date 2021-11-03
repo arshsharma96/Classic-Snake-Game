@@ -22,40 +22,64 @@ score = 0
 food_pos = 0
 
 
-# moves the snake upwards
-def go_up():
+# handling repetition of snake movement methods using lambda expression
+def bind_direction_keys():
+    screen.onkeypress(lambda: set_snake_direction("up"), "Up")
+    screen.onkeypress(lambda: set_snake_direction("down"), "Down")
+    screen.onkeypress(lambda: set_snake_direction("left"), "Left")
+    screen.onkeypress(lambda: set_snake_direction("right"), "Right")
+
+
+def set_snake_direction(direction):
     global snake_direction
-
-    # condition to stop pressing the opposite key
-    if snake_direction != "down":
-        snake_direction = "up"
-
-
-# moves snake downwards
-def go_down():
-    global snake_direction
-
-    # condition to stop pressing the opposite key
-    if snake_direction != "up":
-        snake_direction = "down"
-
-
-# moves snake left
-def go_left():
-    global snake_direction
-
-    # condition to stop pressing the opposite key
-    if snake_direction != "right":
-        snake_direction = "left"
+    if direction == "up":
+        if snake_direction != "down":  # No self collision simply by pressing wrong key
+            snake_direction = "up"
+    elif direction == "down":
+        if snake_direction != "up":  # No self collision simply by pressing wrong key
+            snake_direction = "down"
+    elif direction == "left":
+        if snake_direction != "right":  # No self collision simply by pressing wrong key
+            snake_direction = "left"
+    elif direction == "right":
+        if snake_direction != "left":  # No self collision simply by pressing wrong key
+            snake_direction = "right"
 
 
-# moves snake right
-def go_right():
-    global snake_direction
-
-    # condition to stop pressing the opposite key
-    if snake_direction != "left":
-        snake_direction = "right"
+# # moves the snake upwards
+# def go_up():
+#     global snake_direction
+#
+#     # condition to stop pressing the opposite key
+#     if snake_direction != "down":
+#         snake_direction = "up"
+#
+#
+# # moves snake downwards
+# def go_down():
+#     global snake_direction
+#
+#     # condition to stop pressing the opposite key
+#     if snake_direction != "up":
+#         snake_direction = "down"
+#
+#
+# # moves snake left
+# def go_left():
+#     global snake_direction
+#
+#     # condition to stop pressing the opposite key
+#     if snake_direction != "right":
+#         snake_direction = "left"
+#
+#
+# # moves snake right
+# def go_right():
+#     global snake_direction
+#
+#     # condition to stop pressing the opposite key
+#     if snake_direction != "left":
+#         snake_direction = "right"
 
 
 # main method for the snake movement
@@ -142,12 +166,13 @@ screen.tracer(0)  # disables automatic automation
 
 # Event handlers
 screen.listen()
+bind_direction_keys()
 
-# action to be taken on pressing the key
-screen.onkeypress(go_up, "Up")
-screen.onkeypress(go_down, "Down")
-screen.onkeypress(go_left, "Left")
-screen.onkeypress(go_right, "Right")
+# # action to be taken on pressing the key
+# screen.onkeypress(go_up, "Up")
+# screen.onkeypress(go_down, "Down")
+# screen.onkeypress(go_left, "Left")
+# screen.onkeypress(go_right, "Right")
 
 # creating a turtle
 stamper = turtle.Turtle()
