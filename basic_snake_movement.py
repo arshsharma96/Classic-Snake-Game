@@ -19,6 +19,7 @@ offsets = {
 
 snake_direction = "up"
 score = 0
+food_pos = 0
 
 
 # moves the snake upwards
@@ -57,6 +58,42 @@ def go_right():
         snake_direction = "right"
 
 
+# main method for the snake movement
+def move_snake():
+    stamper.clearstamps()  # clears existing stamps
+
+    new_head = snake[-1].copy()
+    new_head[0] += offsets[snake_direction][0]
+    new_head[1] += offsets[snake_direction][1]
+
+    # Check collisions
+    # this enables if snake touches the wall or itself the game ends
+    if new_head in snake or new_head[0] < - WIDTH / 2 or new_head[0] > WIDTH / 2 or new_head[1] < - HEIGHT / 2 or \
+            new_head[1] > HEIGHT / 2:
+        # turtle.bye()  # closing the program
+        reset()
+    else:
+        # add new head to snake body
+        snake.append(new_head)
+
+        # check for food collisions
+        if not food_collision():
+            # remove the tail of the snake body
+            snake.pop(0)  # keep the snake length same unless fed
+
+        # Draw snake for the first time
+        for segmentIntMvSnake in snake:
+            stamper.goto(segmentIntMvSnake[0], segmentIntMvSnake[1])
+            stamper.stamp()
+
+        # Refresh screen
+        screen.title(f"Snake Game. Score : {score}")
+        screen.update()
+
+        # Rinse and repeat
+        turtle.ontimer(move_snake, DELAY)
+
+
 # implements pythagoras theorem
 # it is to check the closest pixels when snake eats the food
 def get_distance(pos1, pos2):
@@ -85,39 +122,15 @@ def get_random_food_pos():
     return x, y
 
 
-# main method for the snake movement
-def move_snake():
-    stamper.clearstamps()  # clears existing stamps
-
-    new_head = snake[-1].copy()
-    new_head[0] += offsets[snake_direction][0]
-    new_head[1] += offsets[snake_direction][1]
-
-    # Check collisions
-    # this enables if snake touches the wall or itself the game ends
-    if new_head in snake or new_head[0] < - WIDTH / 2 or new_head[0] > WIDTH / 2 or new_head[1] < - HEIGHT / 2 or \
-            new_head[1] > HEIGHT / 2:
-        turtle.bye()  # closing the program
-    else:
-        # add new head to snake body
-        snake.append(new_head)
-
-        # check for food collisions
-        if not food_collision():
-            # remove the tail of the snake body
-            snake.pop(0)  # keep the snake length same unless fed
-
-        # Draw snake for the first time
-        for segmentIntMvSnake in snake:
-            stamper.goto(segmentIntMvSnake[0], segmentIntMvSnake[1])
-            stamper.stamp()
-
-        # Refresh screen
-        screen.title(f"Snake Game. Score : {score}")
-        screen.update()
-
-        # Rinse and repeat
-        turtle.ontimer(move_snake, DELAY)
+# to reset the game once the snake hits the wall or itself
+def reset():
+    global score, snake, snake_direction, food_pos
+    score = 0
+    snake = [[0, 0], [20, 0], [40, 0], [60, 0]]
+    snake_direction = "up"
+    food_pos = get_random_food_pos()
+    food.goto(food_pos)
+    move_snake()
 
 
 # creating the window for drawing
@@ -144,10 +157,10 @@ stamper.penup()  # so the stamp does not make a mark when moving
 # create snake as a list of coordinates pairs
 snake = [[0, 0], [20, 0], [40, 0], [60, 0]]
 
-# Draw snake for the first time
-for segment in snake:
-    stamper.goto(segment[0], segment[1])
-    stamper.stamp()
+# # Draw snake for the first time
+# for segment in snake:
+#     stamper.goto(segment[0], segment[1])
+#     stamper.stamp()
 
 # food
 food = turtle.Turtle()
@@ -155,11 +168,9 @@ food.shape("circle")
 food.shapesize(FOOD_SIZE / 10)
 food.color("blue")
 food.penup()
-food_pos = get_random_food_pos()
-food.goto(food_pos)
 
 # Set animation in motion state
-move_snake()
+reset()
 
 # Finish nicely
 turtle.done()
