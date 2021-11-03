@@ -19,6 +19,7 @@ offsets = {
 snake_direction = "up"
 
 
+# moves the snake upwards
 def go_up():
     global snake_direction
 
@@ -27,6 +28,7 @@ def go_up():
         snake_direction = "up"
 
 
+# moves snake downwards
 def go_down():
     global snake_direction
 
@@ -35,6 +37,7 @@ def go_down():
         snake_direction = "down"
 
 
+# moves snake left
 def go_left():
     global snake_direction
 
@@ -43,6 +46,7 @@ def go_left():
         snake_direction = "left"
 
 
+# moves snake right
 def go_right():
     global snake_direction
 
@@ -51,6 +55,16 @@ def go_right():
         snake_direction = "right"
 
 
+# implements pythagoras theorem
+# it is to check the closest pixels when snake eats the food
+def get_distance(pos1, pos2):
+    x1, y1 = pos1
+    x2, y2 = pos2
+    distance = ((y2 - y1) ** 2 + (x2 - x2) ** 2) ** 0.5
+    return distance
+
+
+# main method for the snake movement
 def move_snake():
     stamper.clearstamps()  # clears existing stamps
 
